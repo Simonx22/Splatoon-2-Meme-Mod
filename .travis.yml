@@ -1,0 +1,23 @@
+before_install:
+ - sudo apt install python3-pip
+ - sudo apt install mono-devel
+ - sudo pip3 install SarcLib
+ - sudo pip3 install libyaz0
+ 
+build_script:
+  COMMIT_ID="$(git rev-parse --short HEAD)"
+  mono Tools/MSBT-CMD.exe Splatoon/Romfs/Message/LayoutMsg.release/Plz_Title_00.msbt T_Copyright_00 "Splatoon 2 Meme Mod Commit ${COMMIT_ID}"
+  rm Splatoon/Romfs/Message/CommonMsg.release/*.lot
+  rm Splatoon/Romfs/Message/LayoutMsg.release/*.lot
+  python3 SARC-Tool/main.py -compress -little Splatoon/Romfs/Message/CommonMsg.release
+  python3 SARC-Tool/main.py -compress -little Splatoon/Romfs/Message/LayoutMsg.release
+  mkdir -p Release/Message/TitleID/Romfs/Message
+  mkdir -p Release/Model/TitleID/Romfs/Model
+  mkdir -p Release/OE-Model/OE-TitleID/Romfs/Model
+  cp README.md Release/Message/README.md
+  cp README.md Release/OE-Model/README.md
+  cp README.md Release/Model/README.md
+  mv Splatoon/Romfs/Message/LayoutMsg.release.szs Release/Message/TitleID/Romfs/Message/LayoutMsg_USen.release.szs
+  mv Splatoon/Romfs/Message/CommonMsg.release.szs Release/Message/TitleID/Romfs/Message/CommonMsg_USen.release.szs
+  mv Splatoon/Romfs/Model Release/Model/TitleID/Romfs
+  mv OE/Romfs/Model Release/OE-Model/OE-TitleID/Romfs

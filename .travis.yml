@@ -1,8 +1,10 @@
 mono:
   - latest
-before_install:
- - sudo pip3 install SarcLib
- - sudo pip3 install libyaz0
+python:
+  - "3.7"
+install:
+  - pip install SarcLib
+  - pip install libyaz0
  
 build_script:
   COMMIT_ID="$(git rev-parse --short HEAD)"

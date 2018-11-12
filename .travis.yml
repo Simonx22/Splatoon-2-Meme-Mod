@@ -1,5 +1,4 @@
 before_install:
- - sudo apt install python3-pip
  - sudo apt install mono-devel
  - sudo pip3 install SarcLib
  - sudo pip3 install libyaz0
